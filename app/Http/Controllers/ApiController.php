@@ -83,73 +83,6 @@ class ApiController extends Controller
       ));
     }
 
-    //buscando Pci
-    $pcis = Pci::select('agenda_id')
-                    ->where('lector_id', '=', $request->user)
-                    ->where('estado', '=', '1')
-                    ->groupBy('agenda_id')->get();
-    $agendas = Agenda::where('fecha', '<=', "'$fechaHoy'");
-    foreach ($pcis as $pci) {
-      $agendas = $agendas->orWhere('id', $pci->agenda_id);
-    }
-    $agendas = $agendas->get();
-
-    $arrayIn = array();
-    foreach ($agendas as $agenda) {
-      $arrayIn[] = $agenda->id;
-    }
-
-    $pcis = Pci::where('lector_id', '=', $request->user)
-                    ->where('estado', '=', '1')
-                    ->whereIn('agenda_id', $arrayIn)->get();
-    foreach ($pcis as $pci) {
-      $ultimomes = LecturasPci::where('pci', $pci->medidor)->orderByDesc('fecha')->first();
-      $lectura1 = -1;
-      $lectura2 = -1;
-      $ultimaAnom = '';
-      if(isset($ultimomes->id)){
-        $ultimaAnom = $ultimomes->anomalia;
-      }
-      $ultimasLecturas = LecturasPci::where('pci', $pci->medidor)
-                              ->where('fecha', '>=',DB::raw("'" . $pci->created_at . "'-interval 3 month"))
-                              ->orderBy('fecha')->get();
-      if(count($ultimasLecturas) >= 2){
-        $count = 1;
-        foreach ($ultimasLecturas as $l) {
-          if($count == 1){
-            $lectura1 = $l->lectura;
-            $count++;
-          }else{
-            $lectura2 = $l->lectura;break;
-          }
-        }
-      }
-
-      array_push($arrayPci, (object) array(
-        'id' => $pci->id,
-        'ct' => $pci->ct,
-        'mt' => $pci->mt,
-        'direccion' => $pci->direccion,
-        'medidor' => $pci->medidor,
-        'medidor_anterior' => $pci->medidor_anterior,
-        'medidor_posterior' => $pci->medidor_posterior,
-        'barrio' => $pci->barrio,
-        'municipio' => $pci->municipio,
-        'codigo' => $pci->codigo,
-        'an_anterior' => $pci->an_anterior,
-        'lectura_anterior' => $pci->lectura_anterior,
-        'unicom' => $pci->unicom,
-        'ruta' => $pci->ruta,
-        'itin' => $pci->itin,
-        'pide_foto' => $pci->pide_foto,
-        'pide_gps' => $pci->pide_gps,
-        'ultima_anomalia' => $ultimaAnom,
-        'lectura1' => $lectura1,
-        'lectura2' => $lectura2,
-        'desviacion_aceptada' => 30,
-      ));
-    }
-
     $anomalias = Anomalias::all();
     foreach ($anomalias as $anomalia) {
       array_push($arrayAnomalias, (object) array(
@@ -174,8 +107,7 @@ class ApiController extends Controller
       'estado' => true,
       'anomalias' => $arrayAnomalias,
       'observaciones_rapidas' => $arrayObservacionesRapidas,
-      'auditorias' => $arrayAuditorias,
-      'pci' => $arrayPci
+      'auditorias' => $arrayAuditorias
     ));
     $collection = new Collection($arrayFINAL);
     return $collection;
@@ -197,8 +129,6 @@ class ApiController extends Controller
           $auditoria->anomalia_id = $request->anomalia;
           $auditoria->observacion_rapida = $request->observacion_rapida;
           $auditoria->lectura = $request->lectura;
-          $auditoria->habitado = $request->habitado;
-          $auditoria->visible = $request->visible;
           $auditoria->observacion_analisis = $request->observacion_analisis;
           $auditoria->latitud = $request->latitud;
           $auditoria->longitud = $request->longitud;
@@ -229,67 +159,6 @@ class ApiController extends Controller
           $logSeg = new Log();
           $logSeg->log = '' . $e;
           $logSeg->servicio_id = $auditoria->id;
-          $logSeg->save();
-        } finally {
-          $response = array(
-            'estado' => false
-          );
-        }
-      } else {
-        $response = array(
-          'estado' => true
-        );
-      }
-    } else {
-      $response = array(
-        'estado' => false
-      );
-    }
-
-    return $response;
-  }
-
-  public function actualizarPci(Request $request)
-  {
-    $response = null;
-    if($request->user){
-      $pci = Pci::where('id', '=', $request->id)->where('estado', '=', '1')->first();
-      if(isset($pci->id)){
-        try {
-          if($request->anomalia == 0){
-            $request->anomalia = null;
-          }
-          $pci->anomalia_id = $request->anomalia;
-          $pci->lectura = $request->lectura;
-          $pci->observacion_analisis = $request->observacion_analisis;
-          $pci->latitud = $request->latitud;
-          $pci->longitud = $request->longitud;
-          $pci->fecha_recibido = $request->fecha_realizado;
-          $pci->fecha_recibido_servidor = Carbon::now();
-          $pci->estado = 2;
-          $pci->orden_realizado = $request->orden_realizado;
-
-          $pci->save();
-          /*
-          $logSeg = new Log();
-          $logSeg->log = '' . $request;
-          $logSeg->servicio_id = $pci->id;
-          $logSeg->save();*/
-
-          if($request->foto != null || $request->foto != ""){
-            //decode base64 string
-            $image = base64_decode($request->foto);
-
-            $archivo = $pci->id . '.png';
-            \File::put(config('myconfig.ruta_fotos_pci') . $archivo, $image);
-          }
-          $response = array(
-            'estado' => true
-          );
-        } catch (\Exception $e) {
-          $logSeg = new Log();
-          $logSeg->log = '' . $e;
-          $logSeg->servicio_id = $pci->id;
           $logSeg->save();
         } finally {
           $response = array(

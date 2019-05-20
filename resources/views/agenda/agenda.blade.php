@@ -37,15 +37,6 @@
                                                     <input id="fechaAgenda" type="date"
                                                            class="form-control" name="fecha">
                                                 </div>
-                                                <div class="col-md-5">
-                                                    <label>Tipo Servicio</label>
-                                                    <select class="form-control" name="delegacion">
-                                                        @foreach($tiposLectura as $tl)
-                                                            <option
-                                                                value="{{$tl->id}}">{{$tl->nombre}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -70,7 +61,6 @@
                             <thead>
                             <tr>
                                 <th scope="col">Agenda</th>
-                                <th scope="col">Tipo Servicio</th>
                                 <th scope="col">Responsable</th>
                                 <th scope="col">Por Asignar</th>
                                 <th scope="col">Pend.</th>
@@ -82,13 +72,6 @@
                             @foreach($agendas as $agenda)
                                 <tr>
                                     <td>{{$agenda->fecha}}</td>
-                                    <td>
-                                        @if($agenda->tipo_lectura_id == 1)
-                                            AUDITORIA
-                                        @else
-                                            PCI
-                                        @endif
-                                    </td>
                                     <td>{{$agenda->usuario}}</td>
                                     <td>{{$agenda->cargasPendientes}}</td>
                                     <td>{{$agenda->pendientes}}</td>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Usuarios;
-use App\TipoLectura;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,10 +26,8 @@ class HomeController extends Controller
     {
       if (isset(\Illuminate\Support\Facades\Auth::user()->id)){
         $usuarios = Usuarios::orderBy('nombre')->get();
-        $tiposLectura = TipoLectura::all();
         return view('home', [
-            'usuarios' => $usuarios,
-            'tiposLectura' => $tiposLectura,
+            'usuarios' => $usuarios
         ]);
       }else{
           return view('auth.login');

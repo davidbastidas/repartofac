@@ -214,7 +214,7 @@
   })();
 
   var visitasMap = (function () {
-    function getPointMapVisita(fecha, gestor_id, tipo_servicio_id) {
+    function getPointMapVisita(fecha, gestor_id) {
       $('#mensaje').hide();
       var loader = $('#geo-loader-ruta');
       loader.show();
@@ -284,8 +284,8 @@
       });
     }
     return {
-      getPointMapVisita: function(fecha, gestor_id, tipo_servicio_id){
-          getPointMapVisita(fecha, gestor_id, tipo_servicio_id);
+      getPointMapVisita: function(fecha, gestor_id){
+          getPointMapVisita(fecha, gestor_id);
       }
     };
   })();

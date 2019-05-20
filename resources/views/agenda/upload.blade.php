@@ -9,7 +9,7 @@
         <div class="col-md-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <center><h3>SUBIR AVISOS EN EXCEL</h3></center>
+                    <center><h3>SUBIR ENTREGAS EN EXCEL</h3></center>
                     <br><br>
                     <div class="row">
                         <div class="col-md-4" style="top: -20px;">
@@ -18,20 +18,6 @@
                                         class="mdi mdi-book-open-page-variant little" style="color:#35abde;">
                                                         {{$agenda->codigo}}
                                                     </span></p>
-                            </center>
-                        </div>
-                        <div class="col-md-4" style="top: -20px;">
-                            <center><p class="mb-2">Tipo de Servicio</p>
-                                <p class="display-3 mb-4 font-weight-light">
-                                    <span
-                                        class="mdi mdi-map-marke littler little" style="color:#35abde;">
-                                        @if($agenda->tipo_lectura_id == 1)
-                                            AUDITORIA
-                                        @else
-                                            PCI
-                                        @endif
-                                    </span>
-                                </p>
                             </center>
                         </div>
                         <div class="col-md-4" style="top: -20px;">

@@ -18,13 +18,6 @@
               @endforeach
             </select>
 
-            <label class="sr-only">Tipo de Servicio</label>
-            <select id="delegacion_filtro" class="form-control mb-2 mr-sm-2">
-                @foreach ($tiposLectura as $tp)
-                  <option value="{{$tp->id}}">{{$tp->nombre}}</option>
-                @endforeach
-            </select>
-
             <label class="sr-only">Estado</label>
             <select id="estados_filtro" class="form-control mb-2 mr-sm-2">
                 <option value="0">[Todos los Estados]</option>
@@ -140,9 +133,8 @@
       fechaNew = year + '-' + month + '-' + day;
 
       let gestor_filtro = $('#gestor_filtro').val();
-      let delegacion_filtro = $('#delegacion_filtro').val();
-      dashboard.getAvancePorGestor(fechaNew, gestor_filtro, delegacion_filtro);
-      dashboard.getAvanceDiario(fechaNew, gestor_filtro, delegacion_filtro);
-      dashboard.getPointMapGestores(fechaNew, gestor_filtro, delegacion_filtro);
+      dashboard.getAvancePorGestor(fechaNew, gestor_filtro);
+      dashboard.getAvanceDiario(fechaNew, gestor_filtro);
+      dashboard.getPointMapGestores(fechaNew, gestor_filtro);
   </script>
 @endsection
