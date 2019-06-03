@@ -9,20 +9,20 @@
         <div class="col-md-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <center><h3>SUBIR LECTURAS DE PCI</h3></center>
+                    <center><h3>SUBIR LISTADO DE MULTIFAMILIARES</h3></center>
                     <br><br>
                     <div class="row">
                         <div class="col-md-12" style="top: -20px;">
-                            Por favor, Ten en cuenta la fecha de carga, el sistema toma la ultima lectura por fecha.
+                            Por favor, Ten en cuenta que NO dupliques la informacion.
                         </div>
                     </div>
                     @if(isset($success))
                         <div class="alert alert-success" role="alert">
-                            <strong>{{$success}}</strong>
+                            <strong>{{$mensaje}}</strong>
                         </div>
                     @endif
                     <br>
-                    <form method="post" action="{{route('agenda.pci.uploadlecturas')}}"
+                    <form method="post" action="{{route('agenda.mfl.uploadNif')}}"
                           enctype="multipart/form-data" style="padding: 0">
                           {{ csrf_field() }}
                         <div class="row">

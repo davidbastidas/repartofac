@@ -61,32 +61,6 @@
                               <label>Lectura</label>
                               <input class="form-control" type="text" name="lectura" value="{{$servicio->lectura}}">
                             </div>
-                            <div class="col-md-2">
-                                <label>Habitado</label>
-                                <select class="form-control" name="habitado">
-                                    <option value="">Selecciona..</option>
-                                    @if ($servicio->habitado == 1)
-                                      <option value="1" selected>SI</option>
-                                      <option value="0">NO</option>
-                                    @else
-                                      <option value="1">SI</option>
-                                      <option value="0" selected>NO</option>
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Anomalia Visible</label>
-                                <select class="form-control" name="visible">
-                                    <option value="">Selecciona..</option>
-                                    @if ($servicio->visible == 1)
-                                      <option value="1" selected>SI</option>
-                                      <option value="0">NO</option>
-                                    @else
-                                      <option value="1">SI</option>
-                                      <option value="0" selected>NO</option>
-                                    @endif
-                                </select>
-                            </div>
                             <div class="col-md-3">
                                 <label>Tipo de Negocio</label>
                                 <select class="form-control" name="observacion">

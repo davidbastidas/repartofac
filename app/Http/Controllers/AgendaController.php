@@ -12,7 +12,7 @@ use App\PciTemp;
 use App\ObservacionesRapidas;
 use App\User;
 use App\Usuarios;
-use App\LecturasPci;
+use App\MultifamiliarSuministros;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -455,7 +455,7 @@ class AgendaController extends Controller
         ]);
     }
 
-    public function subirLecturasPci(Request $request)
+    public function subirMultifamiliares(Request $request)
     {
         if(isset($request->file)){
           $archivo = $request->file;
@@ -468,19 +468,17 @@ class AgendaController extends Controller
                       $base[$count] = $y_value;
                       $count++;
                   }
-                  $servicio = new LecturasPci();
-                  $servicio->ct = $base[0];
-                  $servicio->mt = $base[1];
-                  $servicio->pci = $base[2];
-                  $servicio->lectura = $base[3];
-                  $servicio->anomalia = $base[4];
-                  $servicio->fecha = $base[5]->format('Y-m-d');
+                  $servicio = new MultifamiliarSuministros();
+                  $servicio->nif = $base[0];
+                  $servicio->cantidad = $base[1];
                   $servicio->save();
               }
           }
-          return \Redirect::route('agenda.pci.uploadlecturas', array('success' => 'Las lecturas se cargaron'));
+          return view('mfl.upload', array(
+                                        'success' => true,
+                                        'mensaje' => 'Los Multifamiliares se cargaron'));
         }else{
-          return view('pci.upload_lecturas');
+          return view('mfl.upload');
         }
     }
     public function consultaServicios(Request $request)

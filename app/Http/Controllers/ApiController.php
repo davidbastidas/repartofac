@@ -73,11 +73,12 @@ class ApiController extends Controller
         'cliente' => $auditoria->cliente,
         'direccion' => $auditoria->direccion,
         'nic' => $auditoria->nic,
+        'nis' => $auditoria->nis,
+        'nif' => $auditoria->nif,
         'ruta' => $auditoria->ruta,
         'itin' => $auditoria->itin,
         'medidor' => $auditoria->medidor,
-        'motivo' => $auditoria->motivo,
-        'nis' => $auditoria->nis,
+        'paquete' => $auditoria->paquete,
         'pide_foto' => $auditoria->pide_foto,
         'pide_gps' => $auditoria->pide_gps
       ));
@@ -160,7 +161,6 @@ class ApiController extends Controller
           $logSeg->log = '' . $e;
           $logSeg->servicio_id = $auditoria->id;
           $logSeg->save();
-        } finally {
           $response = array(
             'estado' => false
           );

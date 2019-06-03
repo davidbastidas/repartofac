@@ -133,10 +133,10 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
     //carga de lecturas Pci
-    Route::match(['get', 'post'], '/admin/pci/lecturas',
+    Route::match(['get', 'post'], '/admin/mfl/nif',
         [
-            'as' => 'agenda.pci.uploadlecturas',
-            'uses' => 'AgendaController@subirLecturasPci'
+            'as' => 'agenda.mfl.uploadNif',
+            'uses' => 'AgendaController@subirMultifamiliares'
         ]
     );
 

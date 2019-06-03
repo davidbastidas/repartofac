@@ -70,9 +70,9 @@
         </li>
 
         <li class="nav-item hand">
-            <a class="nav-link" href="{{route('agenda.pci.uploadlecturas')}}">
+            <a class="nav-link" href="{{route('agenda.mfl.uploadNif')}}">
                 <i class="menu-icon mdi mdi-map"></i>
-                <span class="menu-title">Carga de Lecturas</span>
+                <span class="menu-title">Carga de Multifamiliares</span>
             </a>
         </li>
     </ul>

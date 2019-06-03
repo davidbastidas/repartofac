@@ -40,7 +40,7 @@
                                           #
                                         </th>
                                         <th style="width: 10%;">FECHA</th>
-                                        <th style="width: 20%;">NIC/CT-MT</th>
+                                        <th style="width: 20%;">NIC</th>
                                         <th style="width: 15%;">MEDIDOR</th>
                                         <th style="width: 10%;">LECTURA</th>
                                         <th style="width: 15%;">ANOMALIA</th>
