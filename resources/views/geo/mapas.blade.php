@@ -19,12 +19,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <select class="form-control" id="tipo_servicio_id">
-                                <option value="">[Tipo de Servicio]</option>
-                                <option value="auditoria">REPARTO</option>
-                            </select>
-                        </div>
                         <div class="col-md-3">
                             <input id="fecha" class="form-control" type="date"/>
                         </div>
@@ -71,8 +65,7 @@
         $('#btnBuscarVisitas').on('click', function () {
             let fecha = $('#fecha').val();
             let gestor_id = $('#gestor_id').val();
-            let tipo_servicio_id = $('#tipo_servicio_id').val();
-            visitasMap.getPointMapVisita(fecha, gestor_id, tipo_servicio_id);
+            visitasMap.getPointMapVisita(fecha, gestor_id);
         });
     </script>
 @endsection
