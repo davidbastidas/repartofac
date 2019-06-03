@@ -235,8 +235,7 @@
         method: "POST",
         data: {
             'fecha': fecha,
-            'gestor_id': gestor_id,
-            'tipo_servicio_id': tipo_servicio_id
+            'gestor_id': gestor_id
         },
         beforeSend: function() {
 
