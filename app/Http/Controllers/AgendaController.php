@@ -7,8 +7,6 @@ use App\Agenda;
 use App\Anomalias;
 use App\Auditoria;
 use App\AuditoriaTemp;
-use App\Pci;
-use App\PciTemp;
 use App\ObservacionesRapidas;
 use App\User;
 use App\Usuarios;
