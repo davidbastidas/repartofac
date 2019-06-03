@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Agenda;
 use App\Auditoria;
-use App\Pci;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,27 +35,15 @@ class DashboardController extends Controller
 
     $gestores = [];
     if(count($arrayAgendas) > 0){
-      if($request->delegacion_filtro == 1){
-        $gestores = Auditoria::select(
-                DB::raw("a.lector_id"),
-                DB::raw("u.nombre"),
-                DB::raw("(select count(1) from auditoria ar where a.lector_id = ar.lector_id and ar.estado > 1 and ar.agenda_id in ($stringIn)) as realizados"),
-                DB::raw("(select count(1) from auditoria ar where a.lector_id = ar.lector_id and ar.estado = 1 and ar.agenda_id in ($stringIn)) as pendientes")
-            )
-            ->from(DB::raw('auditoria a'))
-            ->join('usuarios as u', 'u.id', '=', 'a.lector_id')
-            ->whereIn('a.agenda_id', $arrayAgendas);
-      }else if($request->delegacion_filtro == 2){
-        $gestores = Pci::select(
-                DB::raw("a.lector_id"),
-                DB::raw("u.nombre"),
-                DB::raw("(select count(1) from pci ar where a.lector_id = ar.lector_id and ar.estado > 1 and ar.agenda_id in ($stringIn)) as realizados"),
-                DB::raw("(select count(1) from pci ar where a.lector_id = ar.lector_id and ar.estado = 1 and ar.agenda_id in ($stringIn)) as pendientes")
-            )
-            ->from(DB::raw('pci a'))
-            ->join('usuarios as u', 'u.id', '=', 'a.lector_id')
-            ->whereIn('a.agenda_id', $arrayAgendas);
-      }
+      $gestores = Auditoria::select(
+              DB::raw("a.lector_id"),
+              DB::raw("u.nombre"),
+              DB::raw("(select count(1) from auditoria ar where a.lector_id = ar.lector_id and ar.estado > 1 and ar.agenda_id in ($stringIn)) as realizados"),
+              DB::raw("(select count(1) from auditoria ar where a.lector_id = ar.lector_id and ar.estado = 1 and ar.agenda_id in ($stringIn)) as pendientes")
+          )
+          ->from(DB::raw('auditoria a'))
+          ->join('usuarios as u', 'u.id', '=', 'a.lector_id')
+          ->whereIn('a.agenda_id', $arrayAgendas);
 
       if($request->has('gestor_filtro')){
         $gestor_filtro = $request->gestor_filtro;
@@ -101,13 +88,8 @@ class DashboardController extends Controller
     $pendientes = 0;
     $resueltos = 0;
     if(count($arrayAgendas) > 0){
-      if($request->delegacion_filtro == 1){
-        $pendientes = Auditoria::where('estado','1')->whereIn('agenda_id', $arrayAgendas);
-        $resueltos = Auditoria::where('estado','2')->whereIn('agenda_id', $arrayAgendas);
-      }else if($request->delegacion_filtro == 2){
-        $pendientes = Pci::where('estado','1')->whereIn('agenda_id', $arrayAgendas);
-        $resueltos = Pci::where('estado','2')->whereIn('agenda_id', $arrayAgendas);
-      }
+      $pendientes = Auditoria::where('estado','1')->whereIn('agenda_id', $arrayAgendas);
+      $resueltos = Auditoria::where('estado','2')->whereIn('agenda_id', $arrayAgendas);
 
       if($request->has('gestor_filtro')){
         $gestor_filtro = $request->gestor_filtro;
@@ -151,25 +133,14 @@ class DashboardController extends Controller
 
     $gestores = [];
     if(count($arrayAgendas) > 0){
-      if($request->delegacion_filtro == 1){
-        $gestores = Auditoria::select(
-                DB::raw("u.nombre"),
-                DB::raw("(select ar.latitud from auditoria ar where a.lector_id = ar.lector_id and ar.agenda_id in ($stringIn) order by ar.orden_realizado desc limit 1) as lat"),
-                DB::raw("(select ar.longitud from auditoria ar where a.lector_id = ar.lector_id and ar.agenda_id in ($stringIn) order by ar.orden_realizado desc limit 1) as lon")
-            )
-            ->from(DB::raw('auditoria a'))
-            ->join('usuarios as u', 'u.id', '=', 'a.lector_id')
-            ->whereIn('a.agenda_id', $arrayAgendas);
-      }else if($request->delegacion_filtro == 2){
-        $gestores = Pci::select(
-                DB::raw("u.nombre"),
-                DB::raw("(select ar.latitud from pci ar where a.lector_id = ar.lector_id and ar.agenda_id in ($stringIn) order by ar.orden_realizado desc limit 1) as lat"),
-                DB::raw("(select ar.longitud from pci ar where a.lector_id = ar.lector_id and ar.agenda_id in ($stringIn) order by ar.orden_realizado desc limit 1) as lon")
-            )
-            ->from(DB::raw('pci a'))
-            ->join('usuarios as u', 'u.id', '=', 'a.lector_id')
-            ->whereIn('a.agenda_id', $arrayAgendas);
-      }
+      $gestores = Auditoria::select(
+              DB::raw("u.nombre"),
+              DB::raw("(select ar.latitud from auditoria ar where a.lector_id = ar.lector_id and ar.agenda_id in ($stringIn) order by ar.orden_realizado desc limit 1) as lat"),
+              DB::raw("(select ar.longitud from auditoria ar where a.lector_id = ar.lector_id and ar.agenda_id in ($stringIn) order by ar.orden_realizado desc limit 1) as lon")
+          )
+          ->from(DB::raw('auditoria a'))
+          ->join('usuarios as u', 'u.id', '=', 'a.lector_id')
+          ->whereIn('a.agenda_id', $arrayAgendas);
 
       if($request->has('gestor_filtro')){
         $gestor_filtro = $request->gestor_filtro;
