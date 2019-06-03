@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <select class="form-control" id="gestor_id">
-                                <option value="">[Lector]</option>
+                                <option value="">[Repartidor]</option>
                                 @foreach ($usuarios as $usuario)
                                     <option value="{{$usuario->id}}">{{$usuario->nombre}}</option>
                                 @endforeach
@@ -22,8 +22,7 @@
                         <div class="col-md-2">
                             <select class="form-control" id="tipo_servicio_id">
                                 <option value="">[Tipo de Servicio]</option>
-                                <option value="auditoria">AUDITORIA</option>
-                                <option value="pci">PCI</option>
+                                <option value="auditoria">REPARTO</option>
                             </select>
                         </div>
                         <div class="col-md-3">

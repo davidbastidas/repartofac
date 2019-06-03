@@ -29,7 +29,7 @@
                                 <form action="{{route('agenda.asignar')}}" method="post">
                                     <input type="hidden" name="agenda" value="{{$agenda}}">
                                     <div class="form-group">
-                                        <label>Lector Cargado</label>
+                                        <label>Repartidor Cargado</label>
                                         <select name="gestor" class="form-control">
                                             @foreach($lectores as $usu)
                                                 <option value="{{$usu->lector}}">{{$usu->lector}}</option>
@@ -37,7 +37,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Lector a Asignar</label>
+                                        <label>Repartidor a Asignar</label>
                                         <select name="user" class="form-control">
                                             @foreach($usuarios as $user)
                                                 <option value="{{$user->id}}">{{$user->nombre}}</option>
@@ -137,9 +137,9 @@
                         <div class="col-md-12">
                             <form class="form-inline" action="{{route('agenda.detalle',['agenda' => $agenda])}}"
                                   method="get">
-                                <label class="sr-only">Lector</label>
+                                <label class="sr-only">Repartidor</label>
                                 <select name="gestor_filtro" class="form-control mb-2 mr-sm-2">
-                                    <option value="0">[Todos los Lectores]</option>
+                                    <option value="0">[Todos los Repartidores]</option>
                                     @foreach($lectoresAsignados as $gestor)
                                         @foreach ($usuarios as $usuario)
                                             @if ($usuario->id == $gestor->lector_id)
@@ -191,7 +191,7 @@
                                                 <input type="checkbox" id="avisos-check-all">
                                             @endif
                                         </th>
-                                        <th style="width: 20%;">Lector</th>
+                                        <th style="width: 20%;">Repartidor</th>
                                         <th style="width: 15%;">Barrio</th>
                                         @if ($agendaModel->tipo_lectura_id == 1)
                                           <th style="width: 10%;">NIC</th>

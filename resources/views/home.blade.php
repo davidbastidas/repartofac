@@ -10,9 +10,9 @@
             <label class="sr-only">Fecha</label>
             <input id="fecha" class="form-control mb-2 mr-sm-2" type="date" id="fecha" required/>
 
-            <label class="sr-only">Lector</label>
+            <label class="sr-only">Repartidor</label>
             <select id="gestor_filtro" class="form-control mb-2 mr-sm-2">
-              <option value="0">[Todos los Lectores]</option>
+              <option value="0">[Todos los Repartidor]</option>
               @foreach ($usuarios as $usuario)
                 <option value="{{$usuario->id}}">{{$usuario->nombre}}</option>
               @endforeach
@@ -78,7 +78,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-              <h2 class="card-title text-primary mb-1">Avance por Lector</h2>
+              <h2 class="card-title text-primary mb-1">Avance por Repartidor</h2>
               <div class="square-box-loader" id="dash-loader-avance-gestor">
                 <div class="square-box-loader-container">
                   <div class="square-box-loader-corner-top"></div>
@@ -92,7 +92,7 @@
                     <thead>
                       <tr>
                         <th style="width: 25% !important;">
-                          Lector
+                          Repartidor
                         </th>
                         <th style="width: 20% !important;">
                           Realiz.

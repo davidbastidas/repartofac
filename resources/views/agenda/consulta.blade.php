@@ -44,7 +44,7 @@
                                         <th style="width: 15%;">MEDIDOR</th>
                                         <th style="width: 10%;">LECTURA</th>
                                         <th style="width: 15%;">ANOMALIA</th>
-                                        <th style="width: 10%;">LECTOR</th>
+                                        <th style="width: 10%;">REPARTIDOR</th>
                                         <th style="width: 10%;">FOTO</th>
                                     </tr>
                                     </thead>
