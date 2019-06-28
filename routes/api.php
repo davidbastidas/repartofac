@@ -20,4 +20,4 @@ Route::group([
 Route::post('login', 'ApiController@login');
 Route::post('servicios/getServicios', 'ApiController@getServicios');
 Route::post('servicios/actualizarAuditoria', 'ApiController@actualizarAuditoria');
-Route::post('servicios/actualizarPci', 'ApiController@actualizarPci');
+Route::post('servicios/insertarRepartoAleatorio', 'ApiController@insertarRepartoAleatorio');

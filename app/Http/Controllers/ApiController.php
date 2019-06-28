@@ -137,9 +137,33 @@ class ApiController extends Controller
           $auditoria->fecha_recibido_servidor = Carbon::now();
           $auditoria->estado = 2;
           $auditoria->orden_realizado = $request->orden_realizado;
+          $auditoria->nombre_recibe = $request->nombre_recibe;
+          $auditoria->telefono_recibe = $request->telefono_recibe;
+          $auditoria->cantidad_recibe = $request->cantidad_recibe;
+          $auditoria->foto_mf = $auditoria->id . '.png';
 
           $auditoria->save();
 
+          $multifamiliares = Auditoria::where('nif', $auditoria->nif)
+                                        ->where('agenda_id', $auditoria->agenda_id)
+                                        ->where('estado', '=', '1')->get();
+          foreach ($multifamiliares as $mf) {
+            $mf->anomalia_id = $request->anomalia;
+            $mf->observacion_rapida = $request->observacion_rapida;
+            $mf->lectura = $request->lectura;
+            $mf->observacion_analisis = $request->observacion_analisis;
+            $mf->latitud = $request->latitud;
+            $mf->longitud = $request->longitud;
+            $mf->fecha_recibido = $request->fecha_realizado;
+            $mf->fecha_recibido_servidor = Carbon::now();
+            $mf->estado = 2;
+            $mf->orden_realizado = $request->orden_realizado;
+            $mf->nombre_recibe = $request->nombre_recibe;
+            $mf->telefono_recibe = $request->telefono_recibe;
+            $mf->cantidad_recibe = $request->cantidad_recibe;
+            $mf->foto_mf = $auditoria->foto_mf;
+            $mf->save();
+          }
           /*
           $logSeg = new Log();
           $logSeg->log = '' . $request;
@@ -168,6 +192,86 @@ class ApiController extends Controller
       } else {
         $response = array(
           'estado' => true
+        );
+      }
+    } else {
+      $response = array(
+        'estado' => false
+      );
+    }
+
+    return $response;
+  }
+
+  public function insertarRepartoAleatorio(Request $request){
+    $response = null;
+    if($request->user){
+      if($request->anomalia == 0){
+        $request->anomalia = null;
+      }
+      if($request->observacion_rapida == 0){
+        $request->observacion_rapida = null;
+      }
+      $auditoria = new Auditoria();
+
+      try {
+        $agenda = Auditoria::where('lector_id', $request->user)->where('agenda_id', '>', 0)->orderByDesc('id')->first();
+        $auditoria->barrio = "";
+        $auditoria->localidad = "";
+        $auditoria->cliente = "";
+        $auditoria->direccion = "";
+        $auditoria->nis = 0;
+        $auditoria->nif = 0;
+        $auditoria->ruta = 0;
+        $auditoria->itin = 0;
+        $auditoria->unicom = 0;
+        $auditoria->medidor = "";
+        $auditoria->paquete = "";
+        $auditoria->fecha_emision = Carbon::now()->format('Y-m-d');
+        $auditoria->lector = $request->user;
+        $auditoria->lector_id = $request->user;
+        $auditoria->agenda_id = $agenda->agenda_id;
+
+        $auditoria->nic = $request->nic;
+        $auditoria->anomalia_id = $request->anomalia;
+        $auditoria->observacion_rapida = $request->observacion_rapida;
+        $auditoria->lectura = $request->lectura;
+        $auditoria->observacion_analisis = $request->observacion_analisis;
+        $auditoria->latitud = $request->latitud;
+        $auditoria->longitud = $request->longitud;
+        $auditoria->fecha_recibido = $request->fecha_realizado;
+        $auditoria->fecha_recibido_servidor = Carbon::now();
+        $auditoria->estado = 2;
+        $auditoria->orden_realizado = $request->orden_realizado;
+        $auditoria->nombre_recibe = $request->nombre_recibe;
+        $auditoria->telefono_recibe = $request->telefono_recibe;
+        $auditoria->cantidad_recibe = $request->cantidad_recibe;
+
+        $auditoria->save();
+
+        /*
+        $logSeg = new Log();
+        $logSeg->log = '' . $request;
+        $logSeg->servicio_id = $auditoria->id;
+        $logSeg->save();}*/
+
+        if($request->foto != null || $request->foto != ""){
+          //decode base64 string
+          $image = base64_decode($request->foto);
+
+          $archivo = $auditoria->id . '.png';
+          \File::put(config('myconfig.ruta_fotos_auditoria') . $archivo, $image);
+        }
+        $response = array(
+          'estado' => true
+        );
+      } catch (\Exception $e) {
+        $logSeg = new Log();
+        $logSeg->log = '' . $e;
+        $logSeg->servicio_id = 0;
+        $logSeg->save();
+        $response = array(
+          'estado' => false
         );
       }
     } else {
