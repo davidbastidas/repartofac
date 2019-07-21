@@ -361,7 +361,13 @@ class AgendaController extends Controller
       $historiaLecturas = null;
 
       $servicio = Auditoria::where('id', $servicio_id)->first();
-      $filename = $servicio->id . ".png";
+
+      $filename = "";
+      if($servicio->foto_mf != null){
+        $filename = $servicio->foto_mf;
+      }else{
+        $filename = $servicio->id . ".png";
+      }
       $path = config('myconfig.public_fotos_auditoria')  . $filename;
       $view = 'agenda.editar_auditoria';
 
@@ -414,6 +420,13 @@ class AgendaController extends Controller
           $agenda = Agenda::where('id', $agenda_id)->first();
           Auditoria::whereIn('id', $arrayIdAvisos)->where('estado', 1)->delete();
         }
+        return redirect()->route('agenda.detalle', ['id' => $agenda_id]);
+    }
+
+    public function deleteServicioSinSeleccion(Request $request){
+        $agenda_id = $request->agenda_id;
+        $agenda = Agenda::where('id', $agenda_id)->first();
+        Auditoria::where('agenda_id', $agenda->id)->where('estado', 1)->delete();
         return redirect()->route('agenda.detalle', ['id' => $agenda_id]);
     }
 
@@ -481,7 +494,7 @@ class AgendaController extends Controller
     }
     public function consultaServicios(Request $request)
     {
-        if(isset($request->medidor_filtro) || isset($request->nic_filtro)){
+        if(isset($request->nic_filtro)){
           $servicios = [];
           if(isset($request->nic_filtro)){
             $auditorias = Auditoria::where('nic',$request->nic_filtro)->orWhere('medidor',$request->medidor_filtro)->get();
@@ -491,14 +504,20 @@ class AgendaController extends Controller
               if(isset($aud->anomalia->nombre)){
                 $anomalia = $aud->anomalia->nombre;
               }
-              $filename = $aud->id . ".png";
+              $filename = "";
+              if($aud->foto_mf != null){
+                $filename = $aud->foto_mf;
+              }else{
+                $filename = $aud->id . ".png";
+              }
+              
               $path = config('myconfig.public_fotos_auditoria')  . $filename;
               array_push($servicios, (object) array(
                                           'fecha' => $fechaC->format('d/m/Y'),
                                           'nicct' => $aud->nic,
                                           'medidor' => $aud->medidor,
                                           'anomalia' => $anomalia,
-                                          'lectura' => $aud->lectura,
+                                          'recibe' => $aud->nombre_recibe .' - '. $aud->telefono_recibe .' - #FAC: '. $aud->cantidad_recibe,
                                           'lector' => $aud->usuario->nombre,
                                           'path' => $path,
                                         ));

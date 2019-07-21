@@ -55,6 +55,17 @@
         $('#form_temp_delete').submit();
       });
 
+      $('#borrar_masivo_nocheck').click(function () {
+        var r = confirm("¿SEGURO DESEAS ELIMINAR TODO LO PENDIENTE?");
+        if (r == true) {
+          var form = $('<form id="form_temp_delete_nocheck" action="{{route('servicio.eliminar.all.nocheck')}}" method="post"></form>');
+          form.append('{{ csrf_field() }}');
+          form.append('<input type="hidden" name="agenda_id" value="'+$('#agenda_id').val()+'">');
+          $('#form-hidden').append(form);
+          $('#form_temp_delete_nocheck').submit();
+        }
+      });
+
       $('#btnIndicador').on('click', function () {
         let fecha = $('#fecha').val();
         let gestor_filtro = $('#gestor_filtro').val();

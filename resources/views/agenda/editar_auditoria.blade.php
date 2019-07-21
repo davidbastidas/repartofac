@@ -57,9 +57,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                              <label>Lectura</label>
-                              <input class="form-control" type="text" name="lectura" value="{{$servicio->lectura}}">
+                            <div class="col-md-4">
+                              <label>Persona que Recibio</label><br>
+                              {{$servicio->nombre_recibe}} TEL: {{$servicio->telefono_recibe}} #FACT: {{$servicio->cantidad_recibe}}
                             </div>
                             <div class="col-md-3">
                                 <label>Tipo de Negocio</label>

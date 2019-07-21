@@ -127,6 +127,9 @@
                                 <input type="hidden" id="agenda_id" value="{{$agenda}}">
                                 <button class="btn btn-danger mb-2" type="submit" id="borrar_masivo">Borrar Masivo
                                 </button>
+                                <br>
+                                <button class="btn btn-danger mb-2" type="submit" id="borrar_masivo_nocheck">Borrar Todo Pendiente
+                                </button>
                                 <div id="form-hidden" style="display: none;"></div>
                             @endif
                         </div>
@@ -162,16 +165,9 @@
                                     <option value="3" @if ($estados_filtro == 3) selected @endif>MODIFICADOS</option>
                                 </select>
 
-                                @if ($agendaModel->tipo_lectura_id == 1)
-                                  <label class="sr-only">NIC</label>
-                                  <input type="text" class="form-control mb-2 mr-sm-2" name="nic_filtro" placeholder="NIC"
-                                         value="{{$nic_filtro}}">
-                                @endif
-
-
-                                <label class="sr-only">MEDIDOR</label>
-                                <input type="text" class="form-control mb-2 mr-sm-2" name="medidor_filtro"
-                                       placeholder="MEDIDOR" value="{{$medidor_filtro}}">
+                              <label class="sr-only">NIC</label>
+                              <input type="text" class="form-control mb-2 mr-sm-2" name="nic_filtro" placeholder="NIC"
+                                     value="{{$nic_filtro}}">
 
                                 <button class="btn btn-success mb-2" type="submit">Filtrar</button>
                             </form>

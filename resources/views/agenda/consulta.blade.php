@@ -20,11 +20,6 @@
                                 <input type="text" class="form-control mb-2 mr-sm-2" name="nic_filtro" placeholder="NIC"
                                        value="{{$nic_filtro}}">
 
-
-                                <label class="sr-only">MEDIDOR</label>
-                                <input type="text" class="form-control mb-2 mr-sm-2" name="medidor_filtro"
-                                       placeholder="MEDIDOR" value="{{$medidor_filtro}}">
-
                                 <button class="btn btn-success mb-2" type="submit">Consultar</button>
                             </form>
                         </div>
@@ -40,9 +35,9 @@
                                           #
                                         </th>
                                         <th style="width: 10%;">FECHA</th>
-                                        <th style="width: 20%;">NIC</th>
+                                        <th style="width: 10%;">NIC</th>
                                         <th style="width: 15%;">MEDIDOR</th>
-                                        <th style="width: 10%;">LECTURA</th>
+                                        <th style="width: 20%;">ATIENDE</th>
                                         <th style="width: 15%;">ANOMALIA</th>
                                         <th style="width: 10%;">REPARTIDOR</th>
                                         <th style="width: 10%;">FOTO</th>
@@ -58,7 +53,7 @@
                                             <td>{{ $serv->fecha }}</td>
                                             <td>{{ $serv->nicct }}</td>
                                             <td>{{ $serv->medidor }}</td>
-                                            <td>{{ $serv->lectura }}</td>
+                                            <td>{{ $serv->recibe }}</td>
                                             <td>{{ $serv->anomalia }}</td>
                                             <td>{{ $serv->lector }}</td>
                                             <td><a href="{{ $serv->path }}" download>Foto</a></td>

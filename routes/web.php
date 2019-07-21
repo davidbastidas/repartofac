@@ -88,6 +88,11 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'AgendaController@deleteServicioPorSeleccion'
     ]);
 
+    Route::post('admin/agenda/servicio/delete/allnocheck', [
+        'as' => 'servicio.eliminar.all.nocheck',
+        'uses' => 'AgendaController@deleteServicioSinSeleccion'
+    ]);
+
     Route::get('admin/mapas', [
         'as' => 'mapas',
         'uses' => 'AgendaController@visitaMapa'
