@@ -25,10 +25,16 @@ class HomeController extends Controller
     public function index()
     {
       if (isset(\Illuminate\Support\Facades\Auth::user()->id)){
-        $usuarios = Usuarios::orderBy('nombre')->get();
-        return view('home', [
-            'usuarios' => $usuarios
-        ]);
+        $usuarioLog = \Illuminate\Support\Facades\Auth::user();
+        if($usuarioLog->tipo_usuario == 1){
+            $usuarios = Usuarios::orderBy('nombre')->get();
+            return view('home', [
+                'usuarios' => $usuarios
+            ]);
+        }else{
+            return redirect()->route('agenda.consultas.servicios');
+        }
+
       }else{
           return view('auth.login');
       }
