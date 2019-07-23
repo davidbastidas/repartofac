@@ -7,13 +7,13 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-10">
-                            <h4>Lista de Usuarios Web</h4>
+                            <h4>Lista de Usuarios Tereno</h4>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-md-9">
-                            <form class="form-inline" action="{{route('usuarios')}}"
+                            <form class="form-inline" action="{{route('usuarioste')}}"
                                   method="get">
                               <label class="sr-only">NOMBRE</label>
                               <input type="text" class="form-control mb-2 mr-sm-2" name="nombre_filtro" placeholder="NOMBRE"
@@ -23,7 +23,7 @@
                             </form>
                         </div>
                         <div class="col-md-3">
-                            <a href="{{route('usuarios.new')}}" class="btn btn-success mb-2">NUEVO USUARIO</a>
+                            <a href="{{route('usuarioste.new')}}" class="btn btn-success mb-2">NUEVO USUARIO</a>
                         </div>
                     </div>
 
@@ -34,7 +34,7 @@
                                     <thead>
                                     <tr>
                                         <th style="width: 20%;">Nombre</th>
-                                        <th style="width: 15%;">E-mail</th>
+                                        <th style="width: 15%;">Nickname</th>
                                         <th style="width: 10%;">Tipo</th>
                                         <th style="width: 10%;">Estado</th>
                                         <th style="width: 10%;">Accion</th>
@@ -43,18 +43,24 @@
                                     <tbody>
                                     @foreach ($usuarios as $usuario)
                                         <tr>
-                                            <td>{{ $usuario->name }}</td>
-                                            <td>{{ $usuario->email }}</td>
-                                            <td>{{ $usuario->puesto }}</td>
-                                            <td>{{ $usuario->estado }}</td>
+                                            <td>{{ $usuario->nombre }}</td>
+                                            <td>{{ $usuario->nickname }}</td>
+                                            <td>{{ $usuario->tipo->nombre }}</td>
                                             <td>
-                                                <form action="{{route('usuarios.view', ['usuario' => $usuario->id])}}">
+                                              @if ($usuario->estado == 1)
+                                                ACTIVO
+                                              @elseif ($usuario->estado == 2)
+                                                INACTIVO
+                                              @endif
+                                            </td>
+                                            <td>
+                                                <form action="{{route('usuarioste.view', ['usuario' => $usuario->id])}}">
                                                     <button style="margin-bottom: 8px"
                                                             class="btn-sm btn btn-outline-primary">
                                                         Ver <i class="mdi mdi-pencil"></i>
                                                     </button>
                                                 </form>
-                                                <form action="{{route('usuarios.delete', ['usuario' => $usuario->id])}}">
+                                                <form action="{{route('usuarioste.delete', ['usuario' => $usuario->id])}}">
                                                     <button style="margin-bottom: 8px"
                                                             class="btn-sm btn btn-outline-danger">
                                                         Eliminar <i class="mdi mdi-delete"></i>

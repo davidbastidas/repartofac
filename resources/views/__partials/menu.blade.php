@@ -76,6 +76,12 @@
                     <span class="menu-title">Usuarios Web</span>
                 </a>
             </li>
+            <li class="nav-item hand">
+                <a class="nav-link" href="{{route('usuarioste')}}">
+                    <i class="menu-icon mdi mdi-map"></i>
+                    <span class="menu-title">Usuarios Terreno</span>
+                </a>
+            </li>
           @endif
         @else
             <li class="nav-item hand">
