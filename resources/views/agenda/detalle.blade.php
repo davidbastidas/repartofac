@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <p class="mb-2">Avance {{$porcentaje.'%'}}</p>
                             <div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-{{$colorBar}}"
@@ -121,7 +121,7 @@
                                      aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="sr-only">Borrar Masivo</label>
                             @if ($pendientes > 0)
                                 <input type="hidden" id="agenda_id" value="{{$agenda}}">
