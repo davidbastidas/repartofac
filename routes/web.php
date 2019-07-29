@@ -204,4 +204,30 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'usuarioste.delete',
         'uses' => 'UsuariosController@deleteTe'
     ]);
+
+    //faqs
+    Route::get('admin/faqs', [
+        'as' => 'faqs',
+        'uses' => 'FaqsController@index'
+    ]);
+
+    Route::get('admin/faqs/view/{faq}', [
+        'as' => 'faqs.view',
+        'uses' => 'FaqsController@view'
+    ]);
+
+    Route::get('admin/faqs/new', [
+        'as' => 'faqs.new',
+        'uses' => 'FaqsController@new'
+    ]);
+
+    Route::post('admin/faqs/save', [
+        'as' => 'faqs.save',
+        'uses' => 'FaqsController@save'
+    ]);
+
+    Route::get('admin/faqs/delete/{faq}', [
+        'as' => 'faqs.delete',
+        'uses' => 'FaqsController@delete'
+    ]);
 });

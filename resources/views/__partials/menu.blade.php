@@ -71,6 +71,12 @@
           </li>
           @if(\Illuminate\Support\Facades\Auth::user()->puesto == 'admin')
             <li class="nav-item hand">
+                <a class="nav-link" href="{{route('faqs')}}">
+                    <i class="menu-icon mdi mdi-map"></i>
+                    <span class="menu-title">Reclamos</span>
+                </a>
+            </li>
+            <li class="nav-item hand">
                 <a class="nav-link" href="{{route('usuarios')}}">
                     <i class="menu-icon mdi mdi-map"></i>
                     <span class="menu-title">Usuarios Web</span>
@@ -83,11 +89,18 @@
                 </a>
             </li>
           @endif
-        @else
+        @elseif(\Illuminate\Support\Facades\Auth::user()->tipo_usuario == 2)
             <li class="nav-item hand">
                 <a class="nav-link" href="{{route('agenda.consultas.servicios')}}">
                     <i class="menu-icon mdi mdi-map"></i>
                     <span class="menu-title">Consutas Generales</span>
+                </a>
+            </li>
+        @elseif(\Illuminate\Support\Facades\Auth::user()->tipo_usuario == 3)
+            <li class="nav-item hand">
+                <a class="nav-link" href="{{route('faqs')}}">
+                    <i class="menu-icon mdi mdi-map"></i>
+                    <span class="menu-title">Reclamos</span>
                 </a>
             </li>
         @endif

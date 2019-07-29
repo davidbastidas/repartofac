@@ -37,18 +37,27 @@
                                     <option value="admin" selected>Administrador</option>
                                     <option value="analista">Analista</option>
                                     <option value="consultas">Consultas</option>
+                                    <option value="faqs">FAQs</option>
                                   @elseif ($usuario->puesto == 'analista')
                                     <option value="admin">Administrador</option>
                                     <option value="analista" selected>Analista</option>
                                     <option value="consultas">Consultas</option>
+                                    <option value="faqs">FAQs</option>
                                   @elseif ($usuario->puesto == 'consultas')
                                     <option value="admin">Administrador</option>
                                     <option value="analista">Analista</option>
                                     <option value="consultas" selected>Consultas</option>
+                                    <option value="faqs">FAQs</option>
+                                  @elseif ($usuario->puesto == 'faqs')
+                                    <option value="admin">Administrador</option>
+                                    <option value="analista">Analista</option>
+                                    <option value="consultas">Consultas</option>
+                                    <option value="faqs" selected>FAQs</option>
                                   @else
                                     <option value="admin">Administrador</option>
                                     <option value="analista">Analista</option>
                                     <option value="consultas">Consultas</option>
+                                    <option value="faqs">FAQs</option>
                                   @endif
                               </select>
                             </div>

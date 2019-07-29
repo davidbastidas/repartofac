@@ -81,6 +81,8 @@ class UsuariosController extends Controller
           $usuario->tipo_usuario = 1;
         }elseif($request->tipo == 'consultas'){
           $usuario->tipo_usuario = 2;
+        }elseif($request->tipo == 'faqs'){
+          $usuario->tipo_usuario = 3;
         }
         $usuario->puesto = $request->tipo;
         $usuario->estado = $request->estado;
@@ -97,6 +99,8 @@ class UsuariosController extends Controller
           $usuario->tipo_usuario = 1;
         }elseif($request->tipo == 'consultas'){
           $usuario->tipo_usuario = 2;
+        }elseif($request->tipo == 'faqs'){
+          $usuario->tipo_usuario = 3;
         }
         $usuario->puesto = $request->tipo;
         $usuario->estado = $request->estado;
