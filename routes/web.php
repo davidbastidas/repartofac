@@ -230,4 +230,22 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'faqs.delete',
         'uses' => 'FaqsController@delete'
     ]);
+
+    Route::get('sendemail', function () {
+
+        $data = array(
+            'name' => "Curso Laravel",
+        );
+
+        Mail::send('faqs.email', $data, function ($message) {
+
+            $message->from('vcelin@quantaservices.com', 'Curso Laravel');
+
+            $message->to('espabastidas19@gmail.com')->cc('bar@example.com')->subject('test email Curso Laravel');
+
+        });
+
+        return "Tú email ha sido enviado correctamente";
+
+    });
 });
