@@ -35,6 +35,7 @@
                                 <table style="width: 100%;text-align:center;font-size: 12px;" class="table-bordered">
                                     <thead>
                                     <tr>
+                                        <th style="width: 10%;">#</th>
                                         <th style="width: 20%;">NIC</th>
                                         <th style="width: 15%;">Reclamo</th>
                                         <th style="width: 10%;">Tipo</th>
@@ -46,13 +47,14 @@
                                     <tbody>
                                     @foreach ($usuarios as $usuario)
                                         <tr>
+                                            <td>{{ $usuario->id }}</td>
                                             <td>{{ $usuario->nic }}</td>
                                             <td>{{ $usuario->reclamo }}</td>
                                             <td>{{ $usuario->tipo }}</td>
                                             <td>Email: {{ $usuario->email_usuario }} - CEL:{{ $usuario->celular_usuaio }}</td>
                                             <td>
                                               @if ($usuario->estado == 1)
-                                                EN SOLCITUD
+                                                EN SOLICITUD
                                               @elseif ($usuario->estado == 2)
                                                 RESUELTO
                                               @endif

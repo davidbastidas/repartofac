@@ -11,9 +11,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Mail;
 
 class FaqsController extends Controller
 {
+    protected $idReclamo = '';
+    protected $aux = '';
+    protected $emailCopy = '';
     public function index(){
         $nombre_filtro = '';
 
@@ -33,7 +37,7 @@ class FaqsController extends Controller
         }
         $modelAux = $model;
         $total_registros = $modelAux->count();
-        $model = $model->offset($offSet)->limit($perPage)->orderBy('id')->get();
+        $model = $model->offset($offSet)->limit($perPage)->orderByDesc('id')->get();
 
         $posts = new LengthAwarePaginator($model, $total_registros, $perPage, $page, [
             'path' => Paginator::resolveCurrentPath(),
@@ -69,13 +73,54 @@ class FaqsController extends Controller
         $usuario->tipo = $request->tipo;
         $usuario->nic = $request->nic;
         $usuario->email_usuario = $request->email_usuario;
-        $usuario->celular_usuaio = $request->celular_usuaio;
-        $usuario->email_usuario = $request->email_usuario;
+        $usuario->celular_usuario = $request->celular_usuario;
         $usuario->observacion = $request->observacion;
 
         $usuario->estado = 1;
         $usuario->id_user = Auth::user()->id;
         $usuario->save();
+
+        //enviar a los correos
+        $nombreGestor = Auth::user()->name;
+        if($usuario->reclamo == 'LECTURA'){
+          $this->idReclamo = $usuario->id;
+          $this->aux = 'RECLAMO DE ' . $usuario->tipo;
+          $this->emailCopy = Auth::user()->email;
+          $data = array(
+            'from' => $nombreGestor . ' - ' . $this->emailCopy,
+            'asunto' => $this->aux,
+            'nic' => $usuario->nic,
+            'usuario' => 'Email: ' . $usuario->email_usuario . ' - CEL: ' . $usuario->celular_usuario,
+            'comentario' => $usuario->observacion,
+          );
+
+          Mail::send('faqs.email', $data, function ($message) {
+
+            $message->from(\Config::get('myconfig.email_noreply'), 'Reclamo de Lectura #' . $this->idReclamo);
+
+            $message->to(\Config::get('myconfig.email_notificacion_lectura'))->cc($this->emailCopy)->subject($this->aux);
+
+          });
+        }elseif($usuario->reclamo == 'REPARTO'){
+          $this->idReclamo = $usuario->id;
+          $this->aux = 'RECLAMO DE ' . $usuario->tipo;
+          $this->emailCopy = Auth::user()->email;
+          $data = array(
+            'from' => $nombreGestor . ' - ' . $this->emailCopy,
+            'asunto' => $this->aux,
+            'nic' => $usuario->nic,
+            'usuario' => 'Email: ' . $usuario->email_usuario . ' - CEL: ' . $usuario->celular_usuario,
+            'comentario' => $usuario->observacion,
+          );
+
+          Mail::send('faqs.email', $data, function ($message) {
+
+            $message->from(\Config::get('myconfig.email_noreply'), 'Reclamo de Reparto #' . $this->idReclamo);
+
+            $message->to(\Config::get('myconfig.email_notificacion_reparto'))->cc($this->emailCopy)->subject($this->aux);
+
+          });
+        }
       }else{
         $usuario = Faqs::find($request->usuario);
 
@@ -83,6 +128,50 @@ class FaqsController extends Controller
 
         $usuario->estado = 2;
         $usuario->save();
+
+        //enviar a los correos
+        $nombreGestor = Auth::user()->name;
+        if($usuario->reclamo == 'LECTURA'){
+          $this->idReclamo = $usuario->id;
+          $this->aux = 'RESPUESTA RECLAMO DE ' . $usuario->tipo;
+          $this->emailCopy = $usuario->user->email;
+          $data = array(
+            'from' => $nombreGestor . ' - ' . Auth::user()->email,
+            'asunto' => $this->aux,
+            'nic' => $usuario->nic,
+            'usuario' => 'Email: ' . $usuario->email_usuario . ' - CEL: ' . $usuario->celular_usuario,
+            'comentario' => $usuario->observacion,
+            'respuesta' => $usuario->respuesta,
+          );
+
+          Mail::send('faqs.email', $data, function ($message) {
+
+            $message->from(\Config::get('myconfig.email_noreply'), 'Respuesta a Reclamo de Lectura #' . $this->idReclamo);
+
+            $message->to($this->emailCopy)->cc(\Config::get('myconfig.email_notificacion_lectura'))->subject($this->aux);
+
+          });
+        }elseif($usuario->reclamo == 'REPARTO'){
+          $this->idReclamo = $usuario->id;
+          $this->aux = 'RESPUESTA RECLAMO DE ' . $usuario->tipo;
+          $this->emailCopy = $usuario->user->email;
+          $data = array(
+            'from' => $nombreGestor . ' - ' . Auth::user()->email,
+            'asunto' => $this->aux,
+            'nic' => $usuario->nic,
+            'usuario' => 'Email: ' . $usuario->email_usuario . ' - CEL: ' . $usuario->celular_usuario,
+            'comentario' => $usuario->observacion,
+            'respuesta' => $usuario->respuesta,
+          );
+
+          Mail::send('faqs.email', $data, function ($message) {
+
+            $message->from(\Config::get('myconfig.email_noreply'), 'Respuesta a Reclamo de Reparto #' . $this->idReclamo);
+
+            $message->to($this->emailCopy)->cc(\Config::get('myconfig.email_notificacion_reparto'))->subject($this->aux);
+
+          });
+        }
       }
 
       return redirect()->route('faqs', ['usuario' => $usuario->id]);

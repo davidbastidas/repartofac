@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-3">
                               <label>Celular Usuario</label>
-                              <input type="text" name="celular_usuaio" class="form-control">
+                              <input type="text" name="celular_usuario" class="form-control">
                             </div>
                             <div class="col-md-6">
                               <label>Comentarios</label>
