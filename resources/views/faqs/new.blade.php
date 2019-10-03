@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12 grid-margin">
             <div class="card">
-                <form action="{{route('faqs.save')}}" method="POST">
+                <form action="{{route('faqs.save')}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <input type="hidden" name="usuario" value="{{$usuario->id}}">
                     <div class="card-body">
@@ -51,18 +51,26 @@
                               <label>Celular Usuario</label>
                               <input type="text" name="celular_usuario" class="form-control">
                             </div>
-                            <div class="col-md-6">
-                              <label>Comentarios</label>
-                              <textarea name="observacion" rows="8" cols="80" class="form-control"></textarea>
+                            <div class="col-md-3">
+                              <label>Foto del Reclamo</label>
+                                <input class="form-control" type="file" name="image"/>
                             </div>
+
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <button style="margin-bottom: 8px"
-                                        class="btn-block btn btn-outline-primary" type="submit">
-                                    Guardar <i class="mdi mdi-content-save"></i>
-                                </button>
-                            </div>
+                          <div class="col-md-6">
+                            <label>Comentarios</label>
+                            <textarea name="observacion" rows="8" cols="80" class="form-control"></textarea>
+                          </div>
+                        </div>
+                        <br><br>
+                        <div class="row">
+                          <div class="col-md-2">
+                              <button style="margin-bottom: 8px"
+                                      class="btn-block btn btn-outline-primary" type="submit">
+                                  Guardar <i class="mdi mdi-content-save"></i>
+                              </button>
+                          </div>
                         </div>
                     </div>
                 </form>

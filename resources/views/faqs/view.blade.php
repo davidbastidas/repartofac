@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12 grid-margin">
             <div class="card">
-                <form action="{{route('faqs.save')}}" method="POST">
+                <form action="{{route('faqs.save')}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <input type="hidden" name="usuario" value="{{$usuario->id}}">
                     <div class="card-body">
@@ -47,6 +47,22 @@
                             <div class="col-md-6">
                               <label style="font-weight: bold;">Comentarios</label><br>
                               {{$usuario->observacion}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                              <label style="font-weight: bold;">Foto del Reclamo</label><br>
+                              <img src="{{$fotoreclamo}}" height="350px" width="100%">
+                            </div>
+                            <div class="col-md-6">
+                              <label style="font-weight: bold;">Foto de Respuesta</label><br>
+                              @if ($usuario->imagen_respuesta == null)
+                                Sin foto <br>
+                                <input class="form-control" type="file" name="image"/>
+                              @else
+                                <img src="{{$fotorespuesta}}" height="350px" width="100%">
+                              @endif
                             </div>
                         </div>
 

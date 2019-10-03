@@ -60,8 +60,13 @@ class FaqsController extends Controller
 
     public function view($faq){
       $usuario = Faqs::find($faq);
+      $fotoreclamo = config('myconfig.ruta_fotos_faqs')  . $usuario->imagen_reclamo;
+      $fotorespuesta = config('myconfig.ruta_fotos_faqs')  . $usuario->imagen_respuesta;
+
       return view('faqs.view', [
-          'usuario' => $usuario
+          'usuario' => $usuario,
+          'fotoreclamo' => $fotoreclamo,
+          'fotorespuesta' => $fotorespuesta
       ]);
     }
 
@@ -79,6 +84,15 @@ class FaqsController extends Controller
         $usuario->estado = 1;
         $usuario->id_user = Auth::user()->id;
         $usuario->save();
+        if ($request->hasFile('image')) {
+          $image = $request->file('image');
+          $name = $usuario->id.'.'.$image->getClientOriginalExtension();
+          $destinationPath = public_path('/images/faqs');
+          $image->move($destinationPath, $name);
+
+          $usuario->imagen_reclamo = $name;
+          $usuario->save();
+        }
 
         //enviar a los correos
         $nombreGestor = Auth::user()->name;
@@ -128,6 +142,16 @@ class FaqsController extends Controller
 
         $usuario->estado = 2;
         $usuario->save();
+
+        if ($request->hasFile('image')) {
+          $image = $request->file('image');
+          $name = $usuario->id.'b.'.$image->getClientOriginalExtension();
+          $destinationPath = public_path('/images/faqs');
+          $image->move($destinationPath, $name);
+
+          $usuario->imagen_respuesta = $name;
+          $usuario->save();
+        }
 
         //enviar a los correos
         $nombreGestor = Auth::user()->name;
